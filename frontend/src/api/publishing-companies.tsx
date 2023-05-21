@@ -23,7 +23,6 @@ export async function deletePublishingCompany(id: number): Promise<void> {
     `${process.env.host}/api/publishing-companies/${id}`,
     { method: "DELETE" }
   );
-  console.log(res);
   if (!res.ok) {
     throw Error("Not deleted. Try again.");
   }

@@ -89,7 +89,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
       toggleEdit();
       handleSave({ ...record, ...values });
     } catch (errInfo) {
-      console.log("Save failed:", errInfo);
+      console.error("Save failed:", errInfo);
     }
   };
 
@@ -328,9 +328,9 @@ export default function CollectionBooksTableComponent(props: any) {
             >
               {publishingCompanies.map((publishingCompany) => (
                 <Option
-                  label={publishingCompany + " " + publishingCompany.name}
+                  label={publishingCompany.id + " " + publishingCompany.name}
                   key={publishingCompany.id}
-                  value={publishingCompany + " " + publishingCompany.name}
+                  value={publishingCompany.id + " " + publishingCompany.name}
                 >
                   {publishingCompany.id} {publishingCompany.name}
                 </Option>

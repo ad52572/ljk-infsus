@@ -63,6 +63,10 @@ test("should add new publishing company @ADD", async ({ page }) => {
 
 test("should delete publishing company @DELETE", async ({ page }) => {
   await page.goto("/publishing-companies");
+  await page.locator('//span[@aria-label="search"]').first().click();
+  await page.locator('//input[@placeholder="Search id"]').click();
+  await page.keyboard.type(postCompany!.toString());
+  await page.keyboard.down("Enter");
   await page.click(
     `//tr[@data-row-key=${postCompany}]/td/a[contains(text(),'Delete')]`
   );
