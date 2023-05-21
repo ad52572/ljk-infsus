@@ -1,7 +1,9 @@
 package inf.infsusbackend.service;
 
 import inf.infsusbackend.DTO.PublishingCompanyDto;
+import inf.infsusbackend.entity.Book;
 import inf.infsusbackend.entity.PublishingCompany;
+import inf.infsusbackend.repository.BookRepository;
 import inf.infsusbackend.repository.PublishingCompanyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import java.util.stream.Collectors;
 public class PublishingCompanyService {
 
     private final PublishingCompanyRepository publishingCompanyRepository;
+    private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PublishingCompanyService(PublishingCompanyRepository publishingCompanyRepository, ModelMapper modelMapper) {
+    public PublishingCompanyService(PublishingCompanyRepository publishingCompanyRepository, BookRepository bookRepository, ModelMapper modelMapper) {
         this.publishingCompanyRepository = publishingCompanyRepository;
+        this.bookRepository = bookRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -54,6 +58,11 @@ public class PublishingCompanyService {
 
     public boolean deletePublishingCompany(Integer id) {
         Optional<PublishingCompany> company = publishingCompanyRepository.findById(id);
+        List<Book> books = bookRepository.findByPublishingCompanyId(id);
+        for (Book book : books) {
+            book.setPublishingCompany(null);
+            bookRepository.save(book);
+        }
         if (company.isEmpty()) {
             return false;
         } else {

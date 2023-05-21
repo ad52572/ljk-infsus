@@ -62,6 +62,7 @@ public class PublishingCompanyRepositoryTest {
     public void testCreateAndDelete() {
         PublishingCompany publishingCompany = new PublishingCompany();
         publishingCompany.setName("Test 6");
+        publishingCompany.setOIB("00604320174");
         PublishingCompany publishingCompany1 = publishingCompanyRepository.save(publishingCompany);
         publishingCompanyRepository.deleteById(publishingCompany1.getId());
         Assertions.assertEquals(3, publishingCompanyRepository.findAll().size());
